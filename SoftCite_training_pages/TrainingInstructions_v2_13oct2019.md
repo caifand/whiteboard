@@ -17,22 +17,22 @@ _Fan Du, Oct 13, 2019_
 
   **Current workflow on TagWorks**: a 2-phase approach
   ![tagworks workflow](https://github.com/caifand/fandu.github.io/blob/master/SoftCite_training_pages/CrowdAnnotationFlow_13oct2019.png)
-    The detail information of a software mention in the text we are annotating in Phase II now:
-      - `software name`
-      - `version`: including both version number and release date. no text included.
-      - `url` (_URL to what?_): software website, project page, repository page, documentation page, etc.
-      - `publisher`: including both individual and organization. Replaces `creator`. Just a title change.
+    The detail information of a software mention in the text we are annotating in Phase II now:  
+      - `software name`  
+      - `version`: including both version number and release date. no text included.  
+      - `url` (_URL to what?_): software website, project page, repository page, documentation page, etc.  
+      - `publisher`: including both individual and organization. Replaces `creator`. Just a title change.  
 
 ## Understand TagWorks
-  1. Use keyboard shortcuts on TagWorks
-    Case numbers should be auto-incrementing now. We don't need to worry about them. Just remember:
-    - Use "Delete" key to remove wrong highlights on TagWorks.
-    - Hold "Alt" (on Windows)/"Options" (on Mac) for accurate control of word boundary.
-  2. Understand the interface cues on TagWorks (_We will cover this on Friday_)
-    - Task interface: Help and prompts. Inkwell. Review.
-    - Adjudication interface
-  3. Understand the terminology and architecture of TagWorks (_We will cover this on Friday_)
-    - Terminology: project. task. task run. contributor. IAA/consensus processing. adjudicator. highlight/TUA.
+  1. Use keyboard shortcuts on TagWorks  
+    Case numbers should be auto-incrementing now. We don't need to worry about them. Just remember:  
+    - Use "Delete" key to remove wrong highlights on TagWorks.  
+    - Hold "Alt" (on Windows)/"Options" (on Mac) for accurate control of word boundary.  
+  2. Understand the interface cues on TagWorks (_We will cover this on Friday_)  
+    - Task interface: Help and prompts. Inkwell. Review.  
+    - Adjudication interface  
+  3. Understand the terminology and architecture of TagWorks (_We will cover this on Friday_)  
+    - Terminology: project. task. task run. contributor. IAA/consensus processing. adjudicator. highlight/TUA.  
 
 ## What do we need to do?
 (_We will cover this on Friday_)
