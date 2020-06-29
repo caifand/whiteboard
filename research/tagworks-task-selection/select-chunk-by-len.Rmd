@@ -1,5 +1,5 @@
 ---
-title: "Check length of PMC article chunks"
+title: "Check size of PMC article chunks"
 author: "Fan Du"
 date: "6/25/2020"
 output: html_document
