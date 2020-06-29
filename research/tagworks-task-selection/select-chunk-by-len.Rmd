@@ -11,7 +11,20 @@ library(tidyverse)
 library(ggplot2)
 library(kableExtra)
 
-pmc_chunks <- read_csv("https://raw.githubusercontent.com/caifand/softcite-dataset/fan/temp/tagworks-task-selection/articles_with_lengths.csv")
+pmc_chunks_len <- read_csv("https://raw.githubusercontent.com/caifand/whiteboard/master/research/tagworks-task-selection/articles_with_lengths.csv")
+
+pmc_chunks_wc <- read_delim("https://raw.githubusercontent.com/caifand/whiteboard/master/research/tagworks-task-selection/pmc-chunk-wc.txt", delim=" ", col_names=c("word_count", "file"))
+
+pmc_chunks_len <- pmc_chunks_len %>% 
+  mutate(chunk_id = str_extract(batch_name, "PMC\\d*-\\d*"))
+
+pmc_chunks_wc <- pmc_chunks_wc %>% 
+  mutate(word_count=str_trim(word_count)) %>% 
+  mutate(word_count=as.numeric(word_count)) %>% 
+  mutate(chunk_id = str_extract(file, "PMC\\d*-\\d*"))
+
+pmc_chunks <- pmc_chunks_len %>% left_join(pmc_chunks_wc) %>% 
+  select(-file)
 ```
 
 **The distribution of PMC article chunk length:**
@@ -34,12 +47,47 @@ pmc_chunks %>%
   group_by(char_len) %>% 
   summarise(n_article = n_distinct(article_number)) %>% 
   knitr::kable() %>% 
-  kable_styling()
+  kable_styling(full_width = F)
+
+```
+**The distribution of PMC article chunk word count:**
+```{r, warning=F}
+# pmc_chunks %>% 
+#   ggplot(aes(x=word_count)) +
+#   geom_bar()
+
+wc_group <- pmc_chunks %>% 
+  group_by(wc_group=cut(word_count, breaks=seq(0, 2100, by=100))) %>% 
+  summarise(n_article = n_distinct(article_number))
+
+wc_range <- wc_group %>% 
+  pull(wc_group) %>% 
+  levels()
+
+wc_range <- c("(0, 100]", "(100, 200]", "(200, 300]", "(300, 400]", "(400, 500]", "(500, 600]", "(600, 700]", "(700, 800]", "(800, 900]", "(900, 1000]", "(1000, 1100]", "(1100, 1200]", "(1200, 1300]", "(1300, 1400]", "(1500, 1600]", "(1600, 1700]", "(1800, 1900]", "(2000,2100]") %>% 
+  as_tibble() %>% 
+  rename(wc_range = value)
+
+wc_group <- wc_group %>% 
+  bind_cols(wc_range) %>% 
+  select(-wc_group) %>% 
+  select(wc_range, everything())
+
+wc_group$wc_range <- factor(wc_group$wc_range, levels = c("(0, 100]", "(100, 200]", "(200, 300]", "(300, 400]", "(400, 500]", "(500, 600]", "(600, 700]", "(700, 800]", "(800, 900]", "(900, 1000]", "(1000, 1100]", "(1100, 1200]", "(1200, 1300]", "(1300, 1400]", "(1500, 1600]", "(1600, 1700]", "(1800, 1900]", "(2000,2100]"))
+
+wc_group %>% 
+  rename(word_count=wc_range) %>% 
+  knitr::kable() %>% 
+  kable_styling(font_size = 11)
+```
+
+**Long table. Bar char is clearer:**
+
+```{r}
+wc_group %>% 
+  ggplot(aes(x=wc_range, y=n_article)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle=45))
 
 ```
 
-**The article length of a common Phase I qualification task (that we all tried before) is most concentrated within (3000, 4500).**
-
-**So I suggest that we do the random selection of tasks for Phase I from the (3000, 5000] group.**
-
-**What do you think?**
